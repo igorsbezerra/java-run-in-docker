@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  app:
+    depends_on:
+      - pg
+    build: .
+    container_name: app
+    entrypoint: dockerize -wait tcp://pg:5432 -timeout 20s mvn spring-boot:run
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+  pg:
+    container_name: pg
+    image: 'bitnami/postgresql'
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_DATABASE=company
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

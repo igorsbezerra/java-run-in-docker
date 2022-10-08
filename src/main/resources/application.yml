@@ -1,0 +1,9 @@
+
+spring:
+  datasource:
+    url: jdbc:postgresql://pg:5432/company
+    username: docker
+    password: docker
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: liquibase/master.xml
